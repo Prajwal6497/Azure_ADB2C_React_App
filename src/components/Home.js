@@ -6,6 +6,7 @@ import './Home.css'; // Import CSS for styling
 function Home() {
     const { instance } = useMsal();
     const accounts = instance.getAllAccounts();
+    console.log("Accounts",accounts);
 
     // useEffect(() => {
     //     const checkAuth = async () => {
