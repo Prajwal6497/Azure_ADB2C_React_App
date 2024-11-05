@@ -1,14 +1,58 @@
+
+import { LogLevel } from "@azure/msal-browser";
+
 export const msalConfig = {
   auth: {
-    clientId: 'xxxx-xxxx-xxxx-xxxx-xxxxx', // This is the ONLY mandatory field that you need to supply.
-    authority: 'https://<tenant-name>.b2clogin.com/<tenant-name>.onmicrosoft.com/b2c_1_susi', // Choose SUSI as your default authority.
-    knownAuthorities: ['<tenant-name>.b2clogin.com'], // Mark your B2C tenant's domain as trusted.
-    redirectUri: 'http://localhost:3000/', // You must register this URI on Azure Portal/App Registration. Defaults to window.location.origin
-    postLogoutRedirectUri: 'http://localhost:3000/', // Indicates the page to navigate after logout.
-    navigateToLoginRequestUrl: false, // If 'true', will navigate back to the original request location before processing the auth code response.
+    clientId: '170d0f46-c4c7-4469-852d-c46733e1dc69',
+    authority: 'https://stancebeamtest.b2clogin.com/stancebeamtest.onmicrosoft.com/B2C_1_SignUp',
+    knownAuthorities: ['stancebeamtest.b2clogin.com'],
+    redirectUri: "http://localhost:3000/",
+    postLogoutRedirectUri: 'http://localhost:3000/',
+    navigateToLoginRequestUrl: false,
   },
   cache: {
-    cacheLocation: 'sessionStorage', // Configures cache location. 'sessionStorage' is more secure, but 'localStorage' gives you SSO between tabs.
-    storeAuthStateInCookie: false, // Set this to 'true' if you are having issues on IE11 or Edge
+    cacheLocation: 'sessionStorage',
+    storeAuthStateInCookie: false,
+  },
+  system: {	
+    loggerOptions: {	
+        loggerCallback: (level, message, containsPii) => {	
+            if (containsPii) {		
+                return;		
+            }		
+            switch (level) {
+                case LogLevel.Error:
+                    console.error(message);
+                    return;
+                case LogLevel.Info:
+                    console.info(message);
+                    return;
+                case LogLevel.Verbose:
+                    console.debug(message);
+                    return;
+                case LogLevel.Warning:
+                    console.warn(message);
+                    return;
+                default:
+                    return;
+            }	
+        }	
+    }	
   }
-}
+};
+
+export const b2cPolicies = {
+  signUp: {
+    authority: 'https://stancebeamtest.b2clogin.com/stancebeamtest.onmicrosoft.com/B2C_1_SignUp',
+  },
+  signIn: {
+    authority: 'https://stancebeamtest.b2clogin.com/stancebeamtest.onmicrosoft.com/B2C_1_SignIn',
+  },
+  editProfile: {
+    authority: 'https://stancebeamtest.b2clogin.com/stancebeamtest.onmicrosoft.com/B2C_1_ProfileEdit',
+  },
+  resetPassword: {
+    authority: 'https://stancebeamtest.b2clogin.com/stancebeamtest.onmicrosoft.com/B2C_1_PasswordReset',
+  },
+};
+
