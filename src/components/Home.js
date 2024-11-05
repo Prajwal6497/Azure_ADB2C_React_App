@@ -1,42 +1,108 @@
-import React from 'react';
+// import React from 'react';
+// import { useMsal } from "@azure/msal-react";
+// import { b2cPolicies } from '../config/msalConfig';
+import './Home.css'; // Import CSS for styling
+
+// function Home() {
+//     const { instance } = useMsal();
+//     const accounts = instance.getAllAccounts();
+//     console.log("Accounts",accounts);
+
+
+
+//     const handleSignUp = () => {
+//         instance.loginRedirect({
+//             authority: b2cPolicies.signUp.authority
+//         });
+//     };
+
+//     const handleSignIn = () => {
+//         instance.loginRedirect({
+//             authority: b2cPolicies.signIn.authority
+//         });
+//     };
+
+//     const handleProfileEdit = () => {
+//         instance.loginRedirect({
+//             authority: b2cPolicies.editProfile.authority
+//         });
+//     };
+
+//     const handlePasswordReset = () => {
+//         instance.loginRedirect({
+//             authority: b2cPolicies.resetPassword.authority
+//         });
+//     };
+
+//     const handleLogout = () => {
+//         instance.logoutRedirect();
+//     };
+
+//     return (
+//         <div className="home-container">
+//             <h1 className="home-title">Welcome to the StanceBeam App</h1>
+//             {accounts.length > 0 ? (
+//                 <div className="user-actions">
+//                     <p className="user-greeting">Hello, {accounts[0].username}</p>
+//                     <button className="btn" onClick={handleProfileEdit}>Edit Profile</button>
+//                     <button className="btn" onClick={handleLogout}>Logout</button>
+//                 </div>
+//             ) : (
+//                 <div className="auth-buttons">
+//                     <button className="btn" onClick={handleSignIn}>Sign In</button>
+//                     <button className="btn btn-signup" onClick={handleSignUp}>Sign Up</button>
+//                     <button className="btn btn-reset" onClick={handlePasswordReset}>Reset Password</button>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// }
+
+// export default Home;
+
+
+
+
+
+import React, { useState, useEffect } from 'react';
 import { useMsal } from "@azure/msal-react";
 import { b2cPolicies } from '../config/msalConfig';
-import './Home.css'; // Import CSS for styling
 
 function Home() {
     const { instance } = useMsal();
-    const accounts = instance.getAllAccounts();
-    console.log("Accounts",accounts);
+    const [loading, setLoading] = useState(true);
+    const [accounts, setAccounts] = useState([]);
 
-
+    useEffect(() => {
+        const accs = instance.getAllAccounts();
+        console.log("accs",accs)
+        setAccounts(accs);
+        setLoading(false);
+    }, [instance]);
 
     const handleSignUp = () => {
-        instance.loginRedirect({
-            authority: b2cPolicies.signUp.authority
-        });
+        instance.loginRedirect({ authority: b2cPolicies.signUp.authority });
     };
 
     const handleSignIn = () => {
-        instance.loginRedirect({
-            authority: b2cPolicies.signIn.authority
-        });
+        instance.loginRedirect({ authority: b2cPolicies.signIn.authority });
     };
 
     const handleProfileEdit = () => {
-        instance.loginRedirect({
-            authority: b2cPolicies.editProfile.authority
-        });
+        instance.loginRedirect({ authority: b2cPolicies.editProfile.authority });
     };
 
     const handlePasswordReset = () => {
-        instance.loginRedirect({
-            authority: b2cPolicies.resetPassword.authority
-        });
+        instance.loginRedirect({ authority: b2cPolicies.resetPassword.authority });
     };
 
     const handleLogout = () => {
         instance.logoutRedirect();
     };
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <div className="home-container">
@@ -59,7 +125,6 @@ function Home() {
 }
 
 export default Home;
-
 
 
 
