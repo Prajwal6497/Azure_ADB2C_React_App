@@ -1,12 +1,10 @@
 import React from 'react';
 import { useMsal } from "@azure/msal-react";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { b2cPolicies } from '../config/msalConfig'; 
 
 function Dashboard() {
     const { instance } = useMsal();
     const accounts = instance.getAllAccounts();
-    const navigate = useNavigate();
 
     const handleProfileEdit = () => {
         instance.loginRedirect({
@@ -28,10 +26,8 @@ function Dashboard() {
                     <button className="btn" onClick={handleLogout}>Logout</button>
                 </div>
             ) : (
-                <div className="auth-buttons">
-                    <button className="btn" onClick={() => navigate('/')}>Sign In</button>
-                    <button className="btn btn-signup" onClick={() => navigate('/')}>Sign Up</button>
-                </div>
+                // Optionally, redirect to home or show a message if no account is found
+                <p className="error-message">User not signed in. Redirecting...</p>
             )}
         </div>
     );

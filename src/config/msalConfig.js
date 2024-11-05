@@ -6,7 +6,7 @@ export const msalConfig = {
     clientId: '170d0f46-c4c7-4469-852d-c46733e1dc69',
     authority: 'https://stancebeamtest.b2clogin.com/stancebeamtest.onmicrosoft.com/B2C_1_SignUp',
     knownAuthorities: ['stancebeamtest.b2clogin.com'],
-    redirectUri: "https://mango-island-0d0bab400.5.azurestaticapps.net/",
+    redirectUri: "https://mango-island-0d0bab400.5.azurestaticapps.net/dashboard",
     postLogoutRedirectUri: 'https://mango-island-0d0bab400.5.azurestaticapps.net/',
     navigateToLoginRequestUrl: false,
   },

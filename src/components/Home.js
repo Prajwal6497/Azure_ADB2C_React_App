@@ -1,25 +1,21 @@
 import React, { useEffect } from 'react';
 import { useMsal } from "@azure/msal-react";
 import { b2cPolicies } from '../config/msalConfig';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './Home.css'; // Import CSS for styling
 
 function Home() {
     const { instance } = useMsal();
     const accounts = instance.getAllAccounts();
-    const navigate = useNavigate(); // Initialize the navigate function
 
     useEffect(() => {
         const checkAuth = async () => {
             const authResponse = await instance.handleRedirectPromise();
             if (authResponse) {
                 console.log("Authentication successful", authResponse);
-                // Redirect to dashboard after successful sign-in
-                navigate('/dashboard');
             }
         };
         checkAuth();
-    }, [instance, navigate]);
+    }, [instance]);
 
     const handleSignUp = () => {
         instance.loginRedirect({
