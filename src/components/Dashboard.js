@@ -21,7 +21,7 @@ function Dashboard() {
             <h1 className="home-title">Welcome to the Dashboard</h1>
             {accounts.length > 0 ? (
                 <div className="user-actions">
-                    <p className="user-greeting">Hello, {accounts[0].username}</p>
+                    <p className="user-greeting">Hellorfrfr, {accounts[0].username}</p>
                     <button className="btn" onClick={handleProfileEdit}>Edit Profile</button>
                     <button className="btn" onClick={handleLogout}>Logout</button>
                 </div>

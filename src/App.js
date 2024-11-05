@@ -10,6 +10,7 @@ function App({ instance }) {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/dashboard" element={<Dashboard />} /> {/* Add dashboard route */}
+                
             </Routes>
         </MsalProvider>
     );

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useMsal } from "@azure/msal-react";
 import { b2cPolicies } from '../config/msalConfig';
 import './Home.css'; // Import CSS for styling
@@ -7,15 +7,15 @@ function Home() {
     const { instance } = useMsal();
     const accounts = instance.getAllAccounts();
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            const authResponse = await instance.handleRedirectPromise();
-            if (authResponse) {
-                console.log("Authentication successful", authResponse);
-            }
-        };
-        checkAuth();
-    }, [instance]);
+    // useEffect(() => {
+    //     const checkAuth = async () => {
+    //         const authResponse = await instance.handleRedirectPromise();
+    //         if (authResponse) {
+    //             console.log("Authentication successful", authResponse);
+    //         }
+    //     };
+    //     checkAuth();
+    // }, [instance]);
 
     const handleSignUp = () => {
         instance.loginRedirect({
