@@ -226,10 +226,6 @@ function Home() {
         instance.logoutRedirect();
     };
 
-    if (loading) {
-        return <div>Loading...</div>; // Display a loading indicator until MSAL is ready
-    }
-
     return (
         <div className="home-container">
             <h1 className="home-title">Welcome to the StanceBeam App</h1>
