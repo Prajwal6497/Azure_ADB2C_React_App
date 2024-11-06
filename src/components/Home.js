@@ -72,15 +72,44 @@
 
 
 
-
-import React from 'react';
-import { useMsal, useAccount } from "@azure/msal-react";
+import React, { useState, useEffect } from 'react';
+import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { b2cPolicies } from '../config/msalConfig';
 import './Home.css'; // Import CSS for styling
 
 function Home() {
     const { instance } = useMsal();
-    const activeAccount = useAccount(instance.getAllAccounts()[0]); // Track the active account
+    const isAuthenticated = useIsAuthenticated(); // Check if authenticated
+    const [activeAccount, setActiveAccount] = useState(null); // Track active account
+    console.log(isAuthenticated, activeAccount)
+
+    useEffect(() => {
+        // Get the initial account if already logged in
+        const accounts = instance.getAllAccounts();
+        if (accounts.length > 0) {
+            setActiveAccount(accounts[0]);
+        }
+
+        // Listen for account changes on sign-in
+        const accountChangedListener = (newAccount) => {
+            if (newAccount) {
+                setActiveAccount(newAccount);
+            } else {
+                setActiveAccount(null); // No account means user is signed out
+            }
+        };
+
+        // Register event handler for account changes
+        const unsubscribe = instance.addEventCallback((event) => {
+            if (event.eventType === "msal:loginSuccess") {
+                accountChangedListener(instance.getAllAccounts()[0]);
+            } else if (event.eventType === "msal:logoutSuccess") {
+                accountChangedListener(null);
+            }
+        });
+
+        return () => unsubscribe && unsubscribe();
+    }, [instance]);
 
     const handleSignUp = () => {
         instance.loginRedirect({
@@ -113,7 +142,7 @@ function Home() {
     return (
         <div className="home-container">
             <h1 className="home-title">Welcome to the StanceBeam App</h1>
-            {activeAccount ? (
+            {isAuthenticated && activeAccount ? (
                 <div className="user-actions">
                     <p className="user-greeting">Hello, {activeAccount.username}</p>
                     <button className="btn" onClick={handleProfileEdit}>Edit Profile</button>
